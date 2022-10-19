@@ -1,37 +1,25 @@
-use std::time::{Duration, Instant};
-
 use sdl2::event::Event;
-use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
 use sdl2::render::WindowCanvas;
-use sdl2::EventPump;
 
-const FRAME_DURATION: Duration = Duration::new(0, 1_000_000_000u32 / 60);
+mod boilerplate;
 
 fn main() -> Result<(), String> {
     println!("Hello, world!");
 
-    // create sdl boilerplate
-    let sdl_context = sdl2::init()?;
-    let video_subsystem = sdl_context.video()?;
-    let window = video_subsystem
-        .window("title", 800, 600)
-        .position_centered()
-        .build()
-        .expect("could not initialize teh video subsystem");
-    let mut event_pump = sdl_context.event_pump()?;
+    let mut game = boilerplate::Game::new("hello allo", 800, 600)
+        .set_fps(60)
+        .set_render_handler(render_handler)
+        .set_keyboard_handler(keyboard_handler)
+        .set_mouse_handler(mouse_handler);
 
-    let mut canvas = window
-        .into_canvas()
-        .build()
-        .map_err(|err| err.to_string())?;
+    game.run()?;
 
-    gameloop(&mut event_pump, &mut canvas)?;
     Ok(())
 }
 
-fn render(canvas: &mut WindowCanvas) -> Result<(), String> {
+fn render_handler(canvas: &mut WindowCanvas) {
     canvas.set_draw_color(Color::RGB(0, 0, 0));
     canvas.clear();
     let pix_w: u32 = 800 / 256 + 1;
@@ -47,37 +35,22 @@ fn render(canvas: &mut WindowCanvas) -> Result<(), String> {
     }
 
     canvas.present();
-    Ok(())
 }
 
-fn gameloop(event_pump: &mut EventPump, canvas: &mut WindowCanvas) -> Result<(), String> {
-    let mut previous_frame = Instant::now();
-
-    'running: loop {
-        for event in event_pump.poll_event() {
-            match event {
-                Event::Quit { .. }
-                | Event::KeyDown {
-                    keycode: Some(Keycode::Escape),
-                    ..
-                } => {
-                    break 'running;
-                }
-                Event::KeyDown {
-                    keycode, keymod, ..
-                } => {
-                    println!("{:?}, {:?}", keycode.unwrap(), keymod)
-                }
-                _ => {}
-            }
-        }
-
-        let timestamp = Instant::now();
-        if timestamp >= previous_frame + FRAME_DURATION {
-            render(canvas)?;
-            previous_frame = timestamp;
-        }
+fn keyboard_handler(keyboard_event: Event) {
+    match keyboard_event {
+        Event::KeyDown { .. } => (),
+        Event::KeyUp { .. } => (),
+        _ => unreachable!(),
     }
+}
 
-    Ok(())
+fn mouse_handler(keyboard_event: Event) {
+    match keyboard_event {
+        Event::MouseButtonDown { .. }
+        | Event::MouseButtonUp { .. }
+        | Event::MouseMotion { .. }
+        | Event::MouseWheel { .. } => (),
+        _ => unreachable!(),
+    }
 }
