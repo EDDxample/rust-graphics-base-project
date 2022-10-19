@@ -22,11 +22,11 @@ fn main() -> Result<(), String> {
 fn render_handler(canvas: &mut WindowCanvas) {
     canvas.set_draw_color(Color::RGB(0, 0, 0));
     canvas.clear();
-    let pix_w: u32 = 800 / 256 + 1;
-    let pix_h: u32 = 600 / 256 + 1;
+    let pix_w: u32 = 800 / 255 + 1;
+    let pix_h: u32 = 600 / 255 + 1;
 
-    for i in 0..=256 {
-        for j in 0..=256 {
+    for i in 0..256 {
+        for j in 0..256 {
             canvas.set_draw_color(Color::RGB(i as u8, j as u8, 255));
             canvas
                 .fill_rect(Rect::new(i * pix_w as i32, j * pix_h as i32, pix_w, pix_h))
