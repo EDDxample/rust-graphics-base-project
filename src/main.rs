@@ -47,10 +47,10 @@ fn keyboard_handler(keyboard_event: Event) {
 
 fn mouse_handler(keyboard_event: Event) {
     match keyboard_event {
-        Event::MouseButtonDown { .. }
-        | Event::MouseButtonUp { .. }
-        | Event::MouseMotion { .. }
-        | Event::MouseWheel { .. } => (),
+        Event::MouseButtonDown { .. } => (),
+        Event::MouseButtonUp { .. } => (),
+        Event::MouseMotion { .. } => (),
+        Event::MouseWheel { .. } => (),
         _ => unreachable!(),
     }
 }
