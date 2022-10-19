@@ -9,7 +9,7 @@ type RenderHandler = fn(&mut WindowCanvas);
 type KeyboardHandler = fn(Event);
 type MouseHandler = fn(Event);
 
-struct Engine {
+pub struct GameEngine {
     fps: u32,
     canvas: WindowCanvas,
     event_pump: EventPump,
@@ -20,44 +20,8 @@ struct Engine {
     mouse_handler: Option<MouseHandler>,
 }
 
-pub struct Game {
-    engine: Engine,
-}
-
-impl Game {
+impl GameEngine {
     pub fn new(title: &str, width: u32, height: u32) -> Self {
-        Self {
-            engine: Engine::new(title, width, height, 60),
-        }
-    }
-
-    pub fn set_fps(mut self, fps: u32) -> Self {
-        self.engine.fps = fps;
-        self
-    }
-
-    pub fn run(&mut self) -> Result<(), String> {
-        self.engine.gameloop()
-    }
-
-    pub fn set_render_handler(mut self, render_handler: RenderHandler) -> Self {
-        self.engine.render_handler = Some(render_handler);
-        self
-    }
-
-    pub fn set_keyboard_handler(mut self, keyboard_handler: KeyboardHandler) -> Self {
-        self.engine.keyboard_handler = Some(keyboard_handler);
-        self
-    }
-
-    pub fn set_mouse_handler(mut self, mouse_handler: MouseHandler) -> Self {
-        self.engine.mouse_handler = Some(mouse_handler);
-        self
-    }
-}
-
-impl Engine {
-    fn new(title: &str, width: u32, height: u32, fps: u32) -> Self {
         let sdl_context = sdl2::init().unwrap();
         let video_subsystem = sdl_context.video().unwrap();
         let window = video_subsystem
@@ -67,7 +31,7 @@ impl Engine {
             .expect("could not initialize the video subsystem");
 
         Self {
-            fps,
+            fps: 60,
             canvas: window.into_canvas().build().unwrap(),
             event_pump: sdl_context.event_pump().unwrap(),
             render_handler: None,
@@ -75,7 +39,28 @@ impl Engine {
             mouse_handler: None,
         }
     }
-    fn gameloop(&mut self) -> Result<(), String> {
+
+    pub fn set_fps(mut self, fps: u32) -> Self {
+        self.fps = fps;
+        self
+    }
+
+    pub fn set_render_handler(mut self, render_handler: RenderHandler) -> Self {
+        self.render_handler = Some(render_handler);
+        self
+    }
+
+    pub fn set_keyboard_handler(mut self, keyboard_handler: KeyboardHandler) -> Self {
+        self.keyboard_handler = Some(keyboard_handler);
+        self
+    }
+
+    pub fn set_mouse_handler(mut self, mouse_handler: MouseHandler) -> Self {
+        self.mouse_handler = Some(mouse_handler);
+        self
+    }
+
+    pub fn run(&mut self) -> Result<(), String> {
         let mut previous_frame = Instant::now();
         let frame_duration = Duration::new(0, 1_000_000_000u32 / self.fps);
 

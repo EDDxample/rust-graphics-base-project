@@ -8,7 +8,7 @@ mod boilerplate;
 fn main() -> Result<(), String> {
     println!("Hello, world!");
 
-    let mut game = boilerplate::Game::new("hello allo", 800, 600)
+    let mut game = boilerplate::GameEngine::new("hello allo", 800, 600)
         .set_fps(60)
         .set_render_handler(render_handler)
         .set_keyboard_handler(keyboard_handler)
