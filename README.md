@@ -5,6 +5,14 @@ Abstraction over SDL 2.0 in rust to code 🚀🔥blazing fast🔥🚀 sketches w
 ## Features
 - [x] Basic interface (render, keyboard and mouse handlers)
 - [x] Example program 
+- [ ] Game examples in other branches
+    - [ ] Pong
+    - [ ] Snake
+    - [ ] Tetris
+- [ ] Sketches
+    - [ ] Rotating 4D cube and other polytopes
+    - [ ] Mandelbrot
+- [ ] Screenshot support
 - [ ] WGPU shader support
 - [ ] ...
 - [ ] Profit
