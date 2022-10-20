@@ -10,7 +10,9 @@ fn main() -> Result<(), String> {
     println!("Hello, world!");
 
     let mut game = GameEngine::new("hello world", 800, 600)
+        .set_tps(20)
         .set_fps(60)
+        .set_tick_handler(tick_handler)
         .set_render_handler(render_handler)
         .set_keyboard_handler(keyboard_handler)
         .set_mouse_handler(mouse_handler);
@@ -37,6 +39,8 @@ fn render_handler(canvas: &mut WindowCanvas) {
 
     canvas.present();
 }
+
+fn tick_handler() {}
 
 fn keyboard_handler(keyboard_event: Event) {
     match keyboard_event {

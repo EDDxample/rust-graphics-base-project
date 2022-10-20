@@ -5,16 +5,19 @@ use sdl2::keyboard::Keycode;
 use sdl2::render::WindowCanvas;
 use sdl2::EventPump;
 
+type TickHandler = fn();
 type RenderHandler = fn(&mut WindowCanvas);
 type KeyboardHandler = fn(Event);
 type MouseHandler = fn(Event);
 
 pub struct GameEngine {
     fps: u32,
+    tps: u32,
     canvas: WindowCanvas,
     event_pump: EventPump,
 
     // handlers
+    tick_handler: Option<TickHandler>,
     render_handler: Option<RenderHandler>,
     keyboard_handler: Option<KeyboardHandler>,
     mouse_handler: Option<MouseHandler>,
@@ -32,16 +35,30 @@ impl GameEngine {
 
         Self {
             fps: 60,
+            tps: 20,
             canvas: window.into_canvas().build().unwrap(),
             event_pump: sdl_context.event_pump().unwrap(),
+            tick_handler: None,
             render_handler: None,
             keyboard_handler: None,
             mouse_handler: None,
         }
     }
 
+    /// Updates the display tick rate
     pub fn set_fps(mut self, fps: u32) -> Self {
         self.fps = fps;
+        self
+    }
+
+    /// Updates the logic tick rate
+    pub fn set_tps(mut self, tps: u32) -> Self {
+        self.tps = tps;
+        self
+    }
+
+    pub fn set_tick_handler(mut self, tick_handler: TickHandler) -> Self {
+        self.tick_handler = Some(tick_handler);
         self
     }
 
@@ -63,6 +80,9 @@ impl GameEngine {
     pub fn run(&mut self) -> Result<(), String> {
         let mut previous_frame = Instant::now();
         let frame_duration = Duration::new(0, 1_000_000_000u32 / self.fps);
+
+        let mut previous_tick = Instant::now();
+        let tick_duration = Duration::new(0, 1_000_000_000u32 / self.tps);
 
         'main: loop {
             for event in self.event_pump.poll_event() {
@@ -89,16 +109,21 @@ impl GameEngine {
                         self.mouse_handler.map(|handle| handle(event));
                     }
 
-                    // ignore the rest of events
+                    // ignore other events
                     _ => {}
                 };
             }
 
-            // call the render handler on time for the next frame
             let timestamp = Instant::now();
+
             if timestamp >= previous_frame + frame_duration {
                 self.render_handler.map(|render| render(&mut self.canvas));
                 previous_frame = timestamp;
+            }
+
+            if timestamp >= previous_tick + tick_duration {
+                self.tick_handler.map(|tick| tick());
+                previous_tick = timestamp;
             }
         }
 
