@@ -50,8 +50,8 @@ fn keyboard_handler(keyboard_event: Event) {
     }
 }
 
-fn mouse_handler(keyboard_event: Event) {
-    match keyboard_event {
+fn mouse_handler(mouse_event: Event) {
+    match mouse_event {
         Event::MouseButtonDown { .. } => (),
         Event::MouseButtonUp { .. } => (),
         Event::MouseMotion { .. } => (),
