@@ -1,6 +1,6 @@
 # Rust Graphics Base Project
 
-Abstraction over SDL 2.0 in rust to code 🚀🔥blazing fast🔥🚀 sketches with minimal overhead.
+Rust abstraction over SDL 2.0 to write 🔥blazing fast🔥 sketches with minimal overhead.
 
 ## Features
 - [x] Basic interface (render, keyboard and mouse handlers)
