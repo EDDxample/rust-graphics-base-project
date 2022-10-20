@@ -3,19 +3,19 @@
 Rust abstraction over SDL 2.0 to write 🔥blazing fast🔥 sketches with minimal overhead.
 
 ## Features
-- [x] Basic interface (tick, render, keyboard and mouse event handlers)
+- [x] Basic interface (tick, render and input event handlers)
 - [x] Example program 
-- [ ] Game examples in other branches
-    - [ ] Pong
-    - [ ] Snake
-    - [ ] Tetris
-- [ ] Sketches
-    - [ ] Rotating 4D cube and other polytopes
-    - [ ] Mandelbrot
 - [ ] Screenshot support
 - [ ] WGPU shader support
 - [ ] ...
 - [ ] Profit
+
+## Examples (check branches)
+- [ ] Pong
+- [ ] Snake
+- [ ] Tetris
+- [ ] Mandelbrot
+- [ ] Rotating 4D cube and other polytopes
 
 ## Getting Started
 - Clone this repo
