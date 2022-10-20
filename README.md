@@ -3,7 +3,7 @@
 Rust abstraction over SDL 2.0 to write 🔥blazing fast🔥 sketches with minimal overhead.
 
 ## Features
-- [x] Basic interface (render, keyboard and mouse handlers)
+- [x] Basic interface (tick, render, keyboard and mouse event handlers)
 - [x] Example program 
 - [ ] Game examples in other branches
     - [ ] Pong
