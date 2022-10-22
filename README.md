@@ -11,7 +11,7 @@ Rust abstraction over SDL 2.0 to write 🔥blazing fast🔥 sketches with minima
 - [ ] Profit
 
 ## Examples (check branches)
-- [ ] Pong
+- [x] Pong
 - [ ] Snake
 - [ ] Tetris
 - [ ] Mandelbrot
