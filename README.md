@@ -4,7 +4,8 @@ Rust abstraction over SDL 2.0 to write 🔥blazing fast🔥 sketches with minima
 
 ## Features
 - [x] Basic interface (tick, render and input event handlers)
-- [x] Example program 
+- [x] Example program
+- [x] Custom game state
 - [ ] Screenshot support
 - [ ] WGPU shader support
 - [ ] ...
