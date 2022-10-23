@@ -1,6 +1,8 @@
 # Pong Game
 
-Basic pong implementation
+Basic singleplayer pong implementation
+
+![thumbnail](assets/thumbnail.png)
 
 ## Controls
 - WASD/arrows to move the bar
