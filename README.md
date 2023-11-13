@@ -16,6 +16,7 @@ Rust abstraction over SDL 2.0 to write 🔥blazing fast🔥 sketches with minima
 ```
 cargo run --example pong
 ```
+![pong](assets/pong.png)
 
 ## Sketch Layout
 ```rs
